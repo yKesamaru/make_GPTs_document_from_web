@@ -1,21 +1,25 @@
-# WEBドキュメントをカスタムGPTsとして作成する方法
+# WEBドキュメントをMy GPTsとして作成する方法
 
-- [WEBドキュメントをカスタムGPTsとして作成する方法](#webドキュメントをカスタムgptsとして作成する方法)
+![](https://raw.githubusercontent.com/yKesamaru/make_GPTs_document_from_web/master/assets/eye-catch.png)
+
+- [WEBドキュメントをMy GPTsとして作成する方法](#webドキュメントをMy GPTsとして作成する方法)
   - [はじめに](#はじめに)
   - [GPT-4が間違いを犯す例](#gpt-4が間違いを犯す例)
     - [質問内容](#質問内容)
       - [最新のGPT-4に質問した場合の回答](#最新のgpt-4に質問した場合の回答)
       - [「最新ドキュメントを知ってるPillowちゃん」に質問した場合の回答](#最新ドキュメントを知ってるpillowちゃんに質問した場合の回答)
   - [ドキュメントを取得する](#ドキュメントを取得する)
-    - [wkhtmltopdfをインストールする](#wkhtmltopdfをインストールする)
-    - [pdfarrangerをインストールする](#pdfarrangerをインストールする)
-  - [Inspectorを用いてselectorを取得する](#inspectorを用いてselectorを取得する)
-  - [取得したセレクターを用いて、複数のURLを取得する](#取得したセレクターを用いて複数のurlを取得する)
+    - [`wkhtmltopdf`をインストールする](#wkhtmltopdfをインストールする)
+    - [`pdfarranger`をインストールする](#pdfarrangerをインストールする)
+    - [Inspectorを用いてselectorを取得する](#inspectorを用いてselectorを取得する)
+    - [取得したセレクターを用いて、複数のURLを取得する](#取得したセレクターを用いて複数のurlを取得する)
     - [得られた複数のURlからPDFを生成する](#得られた複数のurlからpdfを生成する)
-    - [PDF Arrangerを用いて単一PDFに結合する](#pdf-arrangerを用いて単一pdfに結合する)
+    - [pdfarrangerを用いて単一PDFに結合する](#pdfarrangerを用いて単一pdfに結合する)
+  - [おわりに](#おわりに)
 
 
-この記事で作成されたカスタムGPTsは、`最新ドキュメントを知ってるPillowちゃん`として共有します。
+この記事で作成されたMy GPTsは、`[最新ドキュメントを知ってるPillowちゃん](https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan)`として共有します。
+
 https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan
 
 ![](https://raw.githubusercontent.com/yKesamaru/make_GPTs_document_from_web/master/assets/2023-11-27_15-22.png)
@@ -35,7 +39,7 @@ https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan
 
 この記事では、Web上のドキュメントを使用してGPTモデルを事前に学習させることにより、これらの問題を克服する方法を紹介します。
 
-つまり、**WEBドキュメントを使ってカスタムGPTsを作成**します。
+つまり、**WEBドキュメントを使ってMy GPTsを作成**します。
 
 最初に結論の一部を紹介すると、単純にクローリングしたhtmlファイルの束をzip圧縮してアップロードしても、期待した成果は得られません。全てのドキュメントをPDFファイル化する必要があります。
 
@@ -90,7 +94,7 @@ AttributeError: 'ImageDraw' object has no attribute 'textsize'
 では、このエラーを質問してみましょう。
 fontのパスと画像ファイル名を実際とおなじものに変更しています。
 
-「
+
 > ```python
 > def metti_testo_su_sfondo(testo, sfondo, posizione=(10, 10), colore_testo=(0, 0, 0), dimensione_font=25):
 > # Apri l'immagine dello sfondo
@@ -116,10 +120,10 @@ fontのパスと画像ファイル名を実際とおなじものに変更して�
 >                               ^^^^^^^^^^^^^^^^
 > AttributeError: 'ImageDraw' object has no attribute 'textsize'
 > ```
-」
+
 
 #### 最新のGPT-4に質問した場合の回答
-「
+
 > 提供されたコードには、`ImageDraw` オブジェクトの `textsize` メソッドに関するエラーが発生しています。`ImageDraw` オブジェクトには `textsize` メソッドは存在しません。このメソッドは `ImageFont` オブジェクトに属しています。したがって、`textsize` メソッドを使用する際には、`ImageFont` オブジェクトを使う必要があります。
 > 
 > 以下に、修正されたコードを示します。コメントを追加して、各行の機能を明確にしました。
@@ -157,7 +161,7 @@ fontのパスと画像ファイル名を実際とおなじものに変更して�
 > ```
 > 
 > この修正により、`ImageDraw` オブジェクトの `textsize` メソッドのエラーを回避し、期待通りの動作を実現することができるはずです。また、フォントファイル `/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf` が存在し、適切なパスに配置されていることを確認してください。
-」
+
 
 このように回答しました。
 **しかしこの回答は間違っています。**
@@ -166,10 +170,10 @@ fontのパスと画像ファイル名を実際とおなじものに変更して�
 このあと何度も質問しましたが、すべて間違った回答が返ってきました。
 
 
-#### 「最新ドキュメントを知ってるPillowちゃん」に質問した場合の回答
+#### 「[最新ドキュメントを知ってるPillowちゃん](https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan)」に質問した場合の回答
 
 ![](https://raw.githubusercontent.com/yKesamaru/make_GPTs_document_from_web/master/assets/response.png)
-「
+
 > はい、エラーの原因と回避策について説明しますね。
 > 
 > エラーメッセージは、`ImageDraw` オブジェクトの `textsize` メソッドが存在しないことを示しています。実は、Pillow バージョン 10.0.0 から `ImageDraw.textsize()` と `ImageDraw.multiline_textsize()` メソッドは削除されています【8†source】。代わりに `ImageDraw.textbbox()` または `ImageDraw.textlength()` メソッドを使用することが推奨されています。
@@ -190,7 +194,6 @@ fontのパスと画像ファイル名を実際とおなじものに変更して�
 > 
 > この修正により、`ImageDraw` オブジェクトの `textsize` メソッドを呼び出す代わりに、`textbbox` を使用してテキストのサイズを取得します。これにより、エラーを回避し、期待通りの動作を実現できるはずです。
 
-」
 
 このような回答を得ましたのでコードを修正し実行したところ、エラーは回避され、期待通りの動作をすることができました。
 
@@ -207,92 +210,42 @@ fontのパスと画像ファイル名を実際とおなじものに変更して�
 3. PDF Arrangerを用いて単一PDFに結合する
 
 この工程に必要なアプリケーションを先にインストールします。
-### wkhtmltopdfをインストールする
+### `wkhtmltopdf`をインストールする
 ```bash
 # wkhtmltopdfをインストール
 sudo apt install wkhtmltopdf -y
 ```
-### pdfarrangerをインストールする
-[pdfarranger](https://github.com/pdfarranger/pdfarranger)
+### `pdfarranger`をインストールする
+[pdfarranger公式ページ](https://github.com/pdfarranger/pdfarranger)
+
 [Flathub](https://flathub.org/apps/com.github.jeromerobert.pdfarranger)か[snap](https://snapcraft.io/pdfarranger)からインストールできます。
 
-## Inspectorを用いてselectorを取得する
+### Inspectorを用いてselectorを取得する
 [Pillow (PIL Fork) 10.1.0 documentation](https://pillow.readthedocs.io/en/stable/index.html)
 
-![](assets/inspector.png)
+![](https://raw.githubusercontent.com/yKesamaru/make_GPTs_document_from_web/master/assets/inspector.png)
 
-## 取得したセレクターを用いて、複数のURLを取得する
-```python
-from urllib.parse import urljoin
-
-import requests
-from bs4 import BeautifulSoup
-
-# ドキュメントのURLを指定
-base_url = 'https://pillow.readthedocs.io/en/stable/'
-
-
-# ドキュメントのURLを指定
-doc_url = urljoin(base_url, 'index.html')
-
-# ページの内容を取得
-response = requests.get(doc_url)
-html = response.text
-
-# BeautifulSoupを使用してHTMLを解析
-soup = BeautifulSoup(html, 'html.parser')
-
-# 指定されたCSSセレクターを使用して要素を見つける
-elements = soup.select(
-    '#overview > div > ul'
-    )
-
-# 各要素の処理
-for elem in elements:
-    links = elem.find_all('a')
-    for link in links:
-        # 相対リンクを絶対リンクに変換
-        absolute_url = urljoin(base_url, link.get('href'))
-        print(absolute_url)
-```
+### 取得したセレクターを用いて、複数のURLを取得する
+https://github.com/yKesamaru/make_GPTs_document_from_web/blob/2354e1d57d64e437d0429b9ff3a29aaf863406a2/get_link.py#L1-L54
 
 ### 得られた複数のURlからPDFを生成する
-```bash
-#!/bin/bash
+https://github.com/yKesamaru/make_GPTs_document_from_web/blob/2354e1d57d64e437d0429b9ff3a29aaf863406a2/pillow_doc_download.sh#L1-L93
 
-urls=(
-https://pillow.readthedocs.io/en/stable/installation.html
-https://pillow.readthedocs.io/en/stable/installation.html#warnings
-https://pillow.readthedocs.io/en/stable/installation.html#python-support
-https://pillow.readthedocs.io/en/stable/installation.html#basic-installation
-https://pillow.readthedocs.io/en/stable/installation.html#building-from-source
-https://pillow.readthedocs.io/en/stable/installation.html#platform-support
-https://pillow.readthedocs.io/en/stable/installation.html#old-versions
-https://pillow.readthedocs.io/en/stable/handbook/index.html
-https://pillow.readthedocs.io/en/stable/handbook/overview.html
+### pdfarrangerを用いて単一PDFに結合する
+![](https://raw.githubusercontent.com/yKesamaru/make_GPTs_document_from_web/master/assets/2023-11-27-20-47-07.png)
+全部で273ページ、8.3MBのPDFが生成されました。
+GPTsでは、一度に100MBまでのファイルをアップロード可能です。
 
-（中略）
+![](https://raw.githubusercontent.com/yKesamaru/make_GPTs_document_from_web/master/assets/2023-11-27-20-50-59.png)
 
-https://pillow.readthedocs.io/en/stable/releasenotes/8.0.0.html
-https://pillow.readthedocs.io/en/stable/releasenotes/7.2.0.html
-https://pillow.readthedocs.io/en/stable/releasenotes/7.1.2.html
-https://pillow.readthedocs.io/en/stable/releasenotes/7.1.1.html
-https://pillow.readthedocs.io/en/stable/releasenotes/7.1.0.html
-https://pillow.readthedocs.io/en/stable/releasenotes/7.0.0.html
-https://pillow.readthedocs.io/en/stable/releasenotes/versioning.html
-https://pillow.readthedocs.io/en/stable/deprecations.html
-)
+これで、「[最新ドキュメントを知ってるPillowちゃん](https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan)」が完成しました。
 
-# 配列の各要素に対してループ
-for (( i=0; i<${#urls[@]}; i++ )); do
-    # 出力ファイル名に連番を使用
-    output_file=$(printf "%02d_output.pdf" $((i+1)))
-    # wkhtmltopdf コマンドを実行
-    wkhtmltopdf "${urls[i]}" "$output_file"
-done
+## おわりに
 
-echo "PDF変換完了"
-```
+この記事では、WEBドキュメントを利用してMy GPTsを作成する方法を解説しました。このプロセスは、最新のドキュメントや情報をモデルに学習させ、より正確で現実的な回答を得るための効果的な手段です。
 
-### PDF Arrangerを用いて単一PDFに結合する
-PDF ドキュメントを結合または分割し、ページを回転、切り抜き、再配置するのに役立つ小さなアプリケーションです。
+作成した「[最新ドキュメントを知ってるPillowちゃん](https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan)」は、Pillowライブラリの最新情報を反映しており、古いメソッドや非推奨の機能に関する誤った提案を避けることができます。通常のGPT-4では、誤った提案が繰り返されてしまうので、My GPTsの提供はそれを回避する方法が提供された、と思えます。
+
+この方法の鍵は、WEB上のドキュメントをPDF化してGPTに取り込むことにあります。この記事で紹介したツールと手順を使えば、誰でも自分の必要とする分野のMy GPTsを作成できるようになります。
+
+以上です。ありがとうございました。
