@@ -1,5 +1,19 @@
 # WEBドキュメントをカスタムGPTsとして作成する方法
 
+- [WEBドキュメントをカスタムGPTsとして作成する方法](#webドキュメントをカスタムgptsとして作成する方法)
+  - [はじめに](#はじめに)
+  - [GPT-4が間違いを犯す例](#gpt-4が間違いを犯す例)
+    - [質問内容](#質問内容)
+      - [最新のGPT-4に質問した場合の回答](#最新のgpt-4に質問した場合の回答)
+      - [「最新ドキュメントを知ってるPillowちゃん」に質問した場合の回答](#最新ドキュメントを知ってるpillowちゃんに質問した場合の回答)
+  - [ドキュメントを取得する](#ドキュメントを取得する)
+    - [wkhtmltopdfをインストールする](#wkhtmltopdfをインストールする)
+    - [pdfarrangerをインストールする](#pdfarrangerをインストールする)
+  - [Inspectorを用いてselectorを取得する](#inspectorを用いてselectorを取得する)
+  - [取得したセレクターを用いて、複数のURLを取得する](#取得したセレクターを用いて複数のurlを取得する)
+    - [得られた複数のURlからPDFを生成する](#得られた複数のurlからpdfを生成する)
+    - [PDF Arrangerを用いて単一PDFに結合する](#pdf-arrangerを用いて単一pdfに結合する)
+
 
 この記事で作成されたカスタムGPTsは、`最新ドキュメントを知ってるPillowちゃん`として共有します。
 https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan
@@ -31,6 +45,8 @@ https://chat.openai.com/g/g-9bLQujz1z-zui-xin-dokiyumentowozhi-tuterupillowtiyan
 
 さて、この記事では題材として`Pillowドキュメント`を学習させます。
 GPT-4はPillowを理解していますが、その知識は古く、かなり多くの非推奨メソッドを使いたがります。
+
+続いて、GPT-4が間違いを犯す例を紹介しますが、忙しい方は[ドキュメントを取得する](#ドキュメントを取得する)まで飛ばして下さい。
 
 ## GPT-4が間違いを犯す例
 例を挙げましょう。
@@ -191,16 +207,21 @@ fontのパスと画像ファイル名を実際とおなじものに変更して�
 3. PDF Arrangerを用いて単一PDFに結合する
 
 この工程に必要なアプリケーションを先にインストールします。
+### wkhtmltopdfをインストールする
 ```bash
-sudo apt install wkhtmltopdf pdfarranger
+# wkhtmltopdfをインストール
+sudo apt install wkhtmltopdf -y
 ```
+### pdfarrangerをインストールする
+[pdfarranger](https://github.com/pdfarranger/pdfarranger)
+[Flathub](https://flathub.org/apps/com.github.jeromerobert.pdfarranger)か[snap](https://snapcraft.io/pdfarranger)からインストールできます。
 
-### Inspectorを用いてselectorを取得する
+## Inspectorを用いてselectorを取得する
 [Pillow (PIL Fork) 10.1.0 documentation](https://pillow.readthedocs.io/en/stable/index.html)
 
 ![](assets/inspector.png)
 
-### 取得したセレクターを用いて、複数のURLを取得する
+## 取得したセレクターを用いて、複数のURLを取得する
 ```python
 from urllib.parse import urljoin
 
